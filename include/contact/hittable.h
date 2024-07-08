@@ -3,6 +3,7 @@
 
 #include "../utils/vec3.h"
 #include "../utils/ray.h"
+#include "../utils/interval.h"
 
 class hit_record {
     public:
@@ -28,7 +29,7 @@ class hittable {
         virtual ~hittable() = default;
 
         // tracks if an object has been 'hit' by a ray, defaults to false.
-        virtual bool hit(const ray& r, double ray_tmin, double ray_tmax, hit_record& hr) const = 0;
+        virtual bool hit(const ray& r, interval ray_interval, hit_record& hr) const = 0;
 };
 
 #endif

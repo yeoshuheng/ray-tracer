@@ -23,7 +23,7 @@ vec3 ray_color(const ray& r, const hittable& world) {
     // if we hit, we use normal to color instead.
     // normal shows us the direction of reflection (where light bounces back to camera)
     
-    if (world.hit(r, 0, INF, hr)) {
+    if (world.hit(r, interval(0, INF), hr)) {
         return 0.5 * (hr.normal + vec3(1., 1., 1.)); 
     }
 

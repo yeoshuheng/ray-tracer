@@ -12,8 +12,7 @@ sphere::sphere(point3 c, double r) {
 
 bool sphere::hit(
     const ray& r, 
-    double ray_tmin, 
-    double ray_tmax, 
+    interval ray_interval, 
     hit_record& hr) const {
     
     double radius = this->get_radius();  point3 center = this->get_center();
@@ -36,9 +35,9 @@ bool sphere::hit(
 
     // we only want to render a color if the current value of t is greater than t_min
     // or if it is lesser than t_max. If it is neither we ignore.
-    if (root <= ray_tmin || ray_tmax <= root) {
+    if (!ray_interval.surrounds(root)) {
         root = (h + discriminant_sqrt) / a; // check if other answer is valid.
-         if (root <= ray_tmin || ray_tmax <= root) {
+         if (!ray_interval.surrounds(root)) {
             return false;
          }
     }

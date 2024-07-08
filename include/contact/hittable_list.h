@@ -22,7 +22,7 @@ class hittable_list : public hittable {
         void add(shared_ptr<hittable> obj);
         
         // hit function
-        bool hit(const ray& r, double ray_tmin, double ray_tmax, hit_record& hr) const override;
+        bool hit(const ray& r, interval ray_interval, hit_record& hr) const override;
 };
 
 #endif
