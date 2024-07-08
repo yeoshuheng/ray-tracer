@@ -1,4 +1,4 @@
-#include "../include/vec3.h"
+#include "../include/utils/vec3.h"
 
 vec3::vec3(double x, double y, double z) {
     e[0] = x; e[1] = y; e[2] = z;

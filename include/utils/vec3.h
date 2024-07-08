@@ -15,7 +15,7 @@ class vec3 {
         vec3(double x, double y, double z);
 
         // getters
-        // const functions cannot modify fields
+        // const functions cannot modify the data fields.
         double getX() const { return e[0]; }
         double getY() const { return e[1]; }
         double getZ() const { return e[2]; }
@@ -31,7 +31,7 @@ class vec3 {
         double& operator[](int i) { return e[i]; }
 
         // takes reference for other vector & adds to current vector.
-        // const reference implies that other cannot be changed.
+        // const reference implies that the argument cannot be modified.
         vec3& operator+=(const vec3& other);
 
         vec3& operator*=(double n);

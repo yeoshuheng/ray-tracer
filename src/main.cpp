@@ -1,18 +1,30 @@
 #include<iostream>
 
-#include "../include/color.h"
-#include "../include/vec3.h"
-#include "../include/camera.h"
-#include "../include/ray.h"
+#include "../include/ray_trace.h"
+#include "../include/contact/hittable_list.h"
+
+#include "../include/models/camera.h"
+#include "../include/models/sphere.h"
 
 
 using namespace std;
 
 int main() {
 
-    int width = 400;
+    // create world
+    hittable_list world;
 
-    double aspect_ratio = 16. / 9.;
+    // add sphere
+    world.add(make_shared<sphere>(point3(0., 0., -1), 0.5));
+
+    // add ground
+    world.add(make_shared<sphere>(point3(0,-100.5,-1), 100));
+
+    // create camera
+
+    int width = 800;
+
+    double aspect_ratio = 16.0 / 9.0;
 
     int height = int(width / aspect_ratio);
 
@@ -37,7 +49,7 @@ int main() {
 
             ray r = ray(center, ray_dir);
             
-            vec3 pixel_color = ray_color(r);
+            vec3 pixel_color = ray_color(r, world);
             
             write_color(std::cout, pixel_color);
         } 

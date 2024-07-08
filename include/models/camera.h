@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "vec3.h"
+#include "../utils/vec3.h"
 
 class camera {
     private:
@@ -9,8 +9,8 @@ class camera {
         int image_width;
         int image_height;
         
-        double focal_length = 1.;
-        double viewport_height = 2.;
+        double focal_length = 1.0;
+        double viewport_height = 2.0;
         double viewport_width;
 
         // upper left pixel location
