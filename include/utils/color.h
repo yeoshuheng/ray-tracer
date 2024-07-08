@@ -9,9 +9,15 @@
 
 void write_color(std::ostream& out, const vec3& pixel) {
 
+    static const interval intensity = interval(0.0, 0.999);
+
     // convert [0, 1] to [0, 255]
     auto r = pixel.getX(); auto g = pixel.getY(); auto b = pixel.getZ();
-    int rbyte = int(RGB * r); int gbyte = int(RGB * g); int bbyte = int(RGB * b);
+
+    // clamp intensity
+    int rbyte = int(RGB * intensity.clamp(r)); 
+    int gbyte = int(RGB * intensity.clamp(g)); 
+    int bbyte = int(RGB * intensity.clamp(b));
 
     out << rbyte << ' ' << gbyte << ' ' << bbyte << '\n';
 }

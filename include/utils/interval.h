@@ -14,9 +14,19 @@ class interval {
 
         double size() const { return max - min; }
 
+        // check t status
+
         bool contains(double x) const { return min <= x && x <= max; }
 
         bool surrounds(double x) const { return min < x && x < max; } 
+
+        // anti-aliasing
+
+        double clamp(double x) const {
+            if (x < min) { return min; }
+            if (x > max) { return max; }
+            return x;
+        }
 
         // static classes to represent a empty world and the full world.
         static const interval empty;

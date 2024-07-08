@@ -9,6 +9,10 @@ class camera {
         int aspect_ratio;
         int image_width;
         int image_height;
+
+        // for anti-aliasing
+        int sample_per_pixel = 10;
+        double pixel_sample_scales;
         
         double focal_length = 1.0;
         double viewport_height = 2.0;
@@ -40,8 +44,13 @@ class camera {
         vec3 get_delta_u() const { return pixel_delta_u; }
         vec3 get_delta_v() const { return pixel_delta_v; }
 
-        void render(const hittable& world);
 
+        // for rendering
+        void render(const hittable& world);
+        ray get_ray(int i, int j);
+
+        // anti-aliasing
+        vec3 sample_square() const;
 };
 
 #endif
