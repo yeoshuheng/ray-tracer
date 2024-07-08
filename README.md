@@ -1,6 +1,6 @@
 # Ray Tracing Engine
 
-This repo consists of a basic ray-tracing engine in C++, as well as a according
+This repo consists of a basic ray-tracing engine in C++ 11.0, as well as a according
 implementation using CUDA framework.
 
 Supports basic render functionality such as:
