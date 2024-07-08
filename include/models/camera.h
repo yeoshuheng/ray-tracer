@@ -1,10 +1,11 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "../utils/vec3.h"
+#include "../contact/hittable.h"
 
 class camera {
     private:
+    
         int aspect_ratio;
         int image_width;
         int image_height;
@@ -31,13 +32,15 @@ class camera {
 
     public:
         // constructor
-        camera(int iw, int ih);
+        camera(int iw, double ar = 16.0/9.0);
 
         // getters
         point3 get_center() const { return camera_center; }
         point3 get_pixel_00() const { return pixel00_loc; }
         vec3 get_delta_u() const { return pixel_delta_u; }
         vec3 get_delta_v() const { return pixel_delta_v; }
+
+        void render(const hittable& world);
 
 };
 
