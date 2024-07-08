@@ -14,15 +14,16 @@ int main() {
     // create world
     hittable_list world;
 
-    // add sphere
-    world.add(make_shared<sphere>(point3(0., 0., -1), 0.5));
 
     // add ground
     world.add(make_shared<sphere>(point3(0,-100.5,-1), 100));
 
+    // add sphere
+    world.add(make_shared<sphere>(point3(0., 0., -1), 0.5));
+
     // create camera
 
-    int width = 800;
+    int width = 400;
 
     double aspect_ratio = 16.0 / 9.0;
 

@@ -34,9 +34,11 @@ bool sphere::hit(
     // solve for the t that results in a hit that is constrainted btw tmin, tmax.
     auto root = (h - discriminant_sqrt) / a;
 
-    if (!(ray_tmax >= root >= ray_tmin)) {
+    // we only want to render a color if the current value of t is greater than t_min
+    // or if it is lesser than t_max. If it is neither we ignore.
+    if (root <= ray_tmin || ray_tmax <= root) {
         root = (h + discriminant_sqrt) / a; // check if other answer is valid.
-         if (!(ray_tmax >= root >= ray_tmin)) {
+         if (root <= ray_tmin || ray_tmax <= root) {
             return false;
          }
     }
