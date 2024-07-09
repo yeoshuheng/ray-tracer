@@ -5,6 +5,7 @@
 #include<iostream>
 
 using std::sqrt;
+using std::fabs;
 
 class vec3 {
     public:
@@ -43,6 +44,17 @@ class vec3 {
         double length_squared() const;
 
         double length() const;
+
+        // Return true if the vector is close to zero in all dimensions.
+        bool near_zero() const {
+            auto s = 1e-8;
+            return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
+        }
+
+
+        // random vectors (for diffuse)
+        static vec3 random();
+        static vec3 random(double min, double max);
 
 };
 
@@ -104,6 +116,40 @@ inline vec3 cross(const vec3& a, const vec3& b) {
 
 inline vec3 unit_vector(const vec3& a) {
     return a / a.length();
+}
+
+
+// sampling method for diffusion
+
+
+// generates a random vector that lies within a unit sphere.
+// with the center of the sphere as the origin.
+
+inline vec3 random_in_unit_sphere() {
+    while (true) {
+        auto p = vec3::random(-1, 1);
+        if (p.length_squared() < 1) { // in sphere
+            return p;
+        }
+    }
+}
+
+inline vec3 random_unit_vector() {
+    return unit_vector(random_in_unit_sphere());
+}
+
+// generates a random vector that bounces off the surface of a hemisphere.
+
+inline vec3 random_on_hemisphere(const vec3& normal) {
+    vec3 in_unit_sphere = random_unit_vector();
+    if (dot(in_unit_sphere, normal) > 0.) { // ensure that they are in the same hemisphere.
+        return in_unit_sphere;
+    } else { return -in_unit_sphere; }
+}
+
+// creates a reflection about the surface.
+inline vec3 reflection(const vec3& normal, const vec3& v) {
+    return v - 2 * dot(normal, v) * normal;
 }
 
 #endif

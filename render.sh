@@ -4,6 +4,6 @@ cd build
 
 cmake ..
 
-cmake --build .
+cmake --build . -v
 
 ./ray_trace > image.ppm

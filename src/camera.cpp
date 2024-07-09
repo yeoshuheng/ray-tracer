@@ -2,6 +2,8 @@
 #include "../include/utils/color.h"
 #include "../include/ray_trace.h"
 
+#include "../include/models/materials.h"
+
 camera::camera(int iw, double ar) {
 
     aspect_ratio = ar;
@@ -36,7 +38,7 @@ void camera::render(const hittable& world) {
             
             for (int s = 0; s < sample_per_pixel; s++) {
                 ray r = get_ray(i, j);
-                vec3 pixel_color = ray_color(r, world);
+                vec3 pixel_color = ray_color(r, world, this->ray_bounce_max);
                 curr_pixel_color += pixel_color;
             }
 
@@ -46,6 +48,39 @@ void camera::render(const hittable& world) {
         } 
     }
 }
+
+// ray movement
+
+vec3 camera::ray_color(const ray& r, const hittable& world, int depth) {
+    if (depth <= 0) { // terminate, too much rays!
+        return vec3(0, 0, 0);
+    }
+
+    hit_record hr;
+
+    // if we hit, we use normal to color instead.
+    // normal shows us the direction of reflection (where light bounces back to camera)
+    
+    if (world.hit(r, interval(0, INF), hr)) {
+
+        ray scattered;
+        vec3 attenuation;
+
+        if (hr.mat->scatter(r, hr, attenuation, scattered)) {
+            return attenuation * ray_color(scattered, world, depth - 1);
+        }
+
+        return vec3(0,0,0);
+    }
+
+    // lerp coloring: linear interpolation to get background
+
+    vec3 unit_direction = unit_vector(r.get_direction());
+    auto a = 0.5 * (unit_direction.getY() + 1.0);
+    return (1.0 - a)* vec3(1.0, 1.0, 1.0) + a * vec3(0.5, 0.7, 1.0);
+
+}
+
 
 vec3 camera::sample_square() const {
     return vec3(random_double(-1, 1) - 0.5, random_double(-1, 1) - 0.5 , 0);

@@ -1,8 +1,8 @@
 #include "../include/models/sphere.h"
 #include "../include/contact/hittable.h"
 
-sphere::sphere(point3 c, double r) {
-    center = c; radius = fmax(0, r);
+sphere::sphere(point3 c, double r, shared_ptr<material> mat) {
+    center = c; radius = fmax(0, r); mat = mat;
 }
 
 // given ray P(t), and sphere Q, we want to find if there is a t
@@ -46,6 +46,7 @@ bool sphere::hit(
     hr.t = root;
     point3 hit_at = r.at(root);
     hr.p = hit_at;
+    hr.mat = mat;   
     
     // division by radius converts the surface normal to unit length.
     vec3 outward_normal = (hit_at - center) / radius;

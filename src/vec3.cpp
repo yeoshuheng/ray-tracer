@@ -1,5 +1,13 @@
 #include "../include/utils/vec3.h"
 
+inline double random_double() {
+    return std::rand() / (RAND_MAX + 1.);
+}
+
+inline double random_double(double min, double max) {
+    return min + (max - min) * random_double();
+}
+
 vec3::vec3(double x, double y, double z) {
     e[0] = x; e[1] = y; e[2] = z;
 }
@@ -28,3 +36,12 @@ double vec3::length_squared() const {
 
 double vec3::length() const {
     return sqrt(length_squared()); }
+
+
+vec3 vec3::random() {
+    return vec3(random_double(), random_double(), random_double());
+}
+
+vec3 vec3::random(double min, double max) {
+    return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
+}

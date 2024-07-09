@@ -10,6 +10,9 @@ class camera {
         int image_width;
         int image_height;
 
+        // for diffusion
+        int ray_bounce_max = 10;
+
         // for anti-aliasing
         int sample_per_pixel = 10;
         double pixel_sample_scales;
@@ -48,6 +51,7 @@ class camera {
         // for rendering
         void render(const hittable& world);
         ray get_ray(int i, int j);
+        vec3 ray_color(const ray& r, const hittable& world, int depth);
 
         // anti-aliasing
         vec3 sample_square() const;

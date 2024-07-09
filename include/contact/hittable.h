@@ -5,10 +5,18 @@
 #include "../utils/ray.h"
 #include "../utils/interval.h"
 
-class hit_record {
+using std::shared_ptr;
+
+// tells compiler that material is defined later.
+// does not need a import because we just need a pointer to a material,
+// not the material itself.
+class material;
+
+struct hit_record {
     public:
         point3 p;
         vec3 normal;
+        shared_ptr<material> mat;
         double t;
 
         // track the face in which the ray hits the object

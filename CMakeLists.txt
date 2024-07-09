@@ -9,9 +9,10 @@ set(SOURCE_FILES
     src/main.cpp
     src/vec3.cpp
     src/ray.cpp
+    src/hittable_list.cpp
+    src/materials.cpp
     src/camera.cpp
     src/sphere.cpp
-    src/hittable_list.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
